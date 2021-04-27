@@ -498,6 +498,7 @@
 			var boxStyle = {
 					'width' : this.size.width,
 					'height' : this.size.height,
+					'border-radius' : '10px',
 					'perspective' : this.options.perspective + 'px'
 				},
 				config = $.extend( this.options, {

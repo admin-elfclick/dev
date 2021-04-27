@@ -9,6 +9,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ComingSoonController;
 use App\Http\Controllers\NewLetterController;
 use App\Http\Controllers\SiteInfoController;
 use App\Http\Controllers\FrontEndController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\FrontEndController;
 
 
 Route::get('/', [FrontEndController::class, 'home'])->name('front-home');
+// Route::get('/', [ComingSoonController::class, 'index'])->name('coming-soon');
 Route::get('category-all', [FrontEndController::class, 'CateAll'])->name('all_categories');
 Route::get('/search-item', [FrontEndController::class, 'search'])->name('search_item');
 Route::get('/product-view-{product:slug}', [FrontEndController::class, 'proView'])->name('view');

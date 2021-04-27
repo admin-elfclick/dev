@@ -29,5 +29,6 @@ a:hover {
 }
 .container {
   width: 144.5rem;
+  max-width: 144.5rem !important;
 }
 

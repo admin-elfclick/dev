@@ -19,7 +19,7 @@
 
 /* General Demo Style */
 body {
-  background: #e4ebe9 url(../images/fancy_deboss.png) repeat top left;
+  background: #fff;
   color: #444;
   font-family: "PT Sans Narrow", Arial, sans-serif;
   font-size: 13px;
@@ -58,9 +58,7 @@ h5 {
 
 .wrapper {
   position: relative;
-  max-width: 840px;
   width: 100%;
-  padding: 0 50px;
   margin: 0 auto;
 }
 
