@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 0rem;
+    padding: 1.2rem 2rem;
     font-size: 1.2rem;
 }
 
@@ -121,7 +121,7 @@ a.myCart__btn > span {
 }
 
 a.myCart__btn {
-    background: #02bfff;
+    background: green;
     border-radius: 0.4rem;
 }
 
@@ -130,7 +130,7 @@ a.login__btn:hover {
 }
 
 a.myCart__btn:hover {
-    background: #08a0d4;
+    background: #03b103;
 }
 
 .search__icon:hover {
@@ -175,7 +175,7 @@ ul.menu > li:hover a {
     margin-bottom: 0rem;
     background: #ffffff;
     height: 50rem;
-    box-shadow: 0px 0px 10px -5px black;
+    box-shadow: 0px 4px 10px -5px black;
 }
 
 .megaMenuMainCategoryContainer > ul > li {
@@ -228,6 +228,21 @@ li#show__all__Categories:hover div.megaMenuMainCategoryContainer {
 .Phones__subCat__list__div {
     display: none;
 }
+.electronics__subCat__list__div {
+    display: none;
+}
+.elfclick__Fashion__subCat__list__div {
+    display: none;
+}
+.homeandkitchen__subCat__list__div {
+    display: none;
+}
+.babykid__subCat__list__div {
+    display: none;
+}
+.other__Category__subCat__list__div {
+    display: none;
+}
 .megaMenuMainCategoryContainer
     > ul
     > li:nth-child(1):hover
@@ -238,6 +253,36 @@ li#show__all__Categories:hover div.megaMenuMainCategoryContainer {
     > ul
     > li:nth-child(2):hover
     div.Phones__subCat__list__div {
+    display: block;
+}
+.megaMenuMainCategoryContainer
+    > ul
+    > li:nth-child(3):hover
+    div.electronics__subCat__list__div {
+    display: block;
+}
+.megaMenuMainCategoryContainer
+    > ul
+    > li:nth-child(4):hover
+    div.elfclick__Fashion__subCat__list__div {
+    display: block;
+}
+.megaMenuMainCategoryContainer
+    > ul
+    > li:nth-child(5):hover
+    div.homeandkitchen__subCat__list__div {
+    display: block;
+}
+.megaMenuMainCategoryContainer
+    > ul
+    > li:nth-child(6):hover
+    div.babykid__subCat__list__div {
+    display: block;
+}
+.megaMenuMainCategoryContainer
+    > ul
+    > li:nth-child(7):hover
+    div.other__Category__subCat__list__div {
     display: block;
 }
 .subCat__list__div__design {
@@ -251,6 +296,8 @@ li#show__all__Categories:hover div.megaMenuMainCategoryContainer {
     padding: 20px;
     transform-origin: left;
     cursor: initial;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 .megaMenuMainCategoryContainer > ul > li > i {
     font-size: 1.6rem;
@@ -263,4 +310,63 @@ li#show__all__Categories:hover div.megaMenuMainCategoryContainer {
 .megaMenuMainCategoryContainer > ul > li:hover i {
     opacity: 1;
     transform: translateX(0px);
+}
+ul.Sub__Cat__List__ul > li {
+    list-style: none;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+}
+
+ul.Sub__Cat__List__ul > li:nth-child(1) {
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-family: -webkit-pictograph;
+    border-bottom: 1px solid #d0d0d0;
+    margin-bottom: 1rem;
+}
+
+ul.Sub__Cat__List__ul > li > a {
+    color: #777777 !important;
+}
+ul.Sub__Cat__List__ul > li:nth-child(1) > a {
+    color: green !important;
+}
+li.computer__nav__list:hover div.computer__subCat__nav__list__div {
+    transform: scale(1);
+}
+
+.computer__subCat__nav__list__div {
+    top: 3.55rem;
+    border-radius: 10px;
+    transform-origin: top;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+.computerAbsolutePosition {
+    left: -20%;
+}
+
+.PhoneAbsolutePosition {
+    left: -23rem;
+}
+
+.ElectronicsAbsolutePosition {
+    left: -38rem;
+}
+
+.FashionAbsolutePosition {
+    left: -49rem;
+}
+
+.HomeKitchenAbsolutePosition {
+    left: -63rem;
+}
+
+.BabyAbsolutePosition {
+    left: -78rem;
+}
+
+.otherCategoriesAbsolutePosition {
+    left: -94rem;
 }

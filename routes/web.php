@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllCategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\CategoryController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\FrontEndController;
 
 Route::get('/', [FrontEndController::class, 'home'])->name('front-home');
 // Route::get('/', [ComingSoonController::class, 'index'])->name('coming-soon');
+Route::get('/all-products', [AllCategoryController::class, 'index'])->name('all_products');
 Route::get('category-all', [FrontEndController::class, 'CateAll'])->name('all_categories');
 Route::get('/search-item', [FrontEndController::class, 'search'])->name('search_item');
 Route::get('/product-view-{product:slug}', [FrontEndController::class, 'proView'])->name('view');
