@@ -10,12 +10,13 @@ use App\Models\Product;
 use App\Models\SiteInfo;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class FrontEndController extends Controller
 {
     public function home()
     {
-
         $data['sliders'] = Slider::where('status',1)->limit(4)->get();
         $data['banners'] = Banner::where('status',1)->latest()->limit(4)->get();
         $data['categoryFo'] = Category::where('status',1)->latest()->limit(4)->get();
@@ -41,6 +42,14 @@ class FrontEndController extends Controller
                                 ->where('id','!=',$product->id)
                                 ->latest()
                                 ->get();
+        $auth = Auth::user();
+        if (!empty($auth)) {
+        DB::table('activities')
+        ->insert([
+          'user_id' => Auth::id(),
+          'product_id' => $product->id,
+        ]);
+      }
 
         return view('FrontEnd.product.product_view',compact('product','relatedProduct'));
     }
@@ -53,8 +62,21 @@ class FrontEndController extends Controller
 
     public function catePro($category_id)
     {
-        $category = Category::find($category_id);
+       $category = Category::find($category_id);
+       if (empty($category)) {
+         $category = Category::where('section_id', $category_id)->first();
+       }
         $products = Product::where('category_id',$category_id)->orderBy('id','desc')->get();
+        return view('FrontEnd.product.catePro',compact('products', 'category'));
+    }
+
+    public function rangeSelect(Request $request)
+    {
+        $category = Category::find($request->category_id);
+        if (empty($category)) {
+          $category = Category::where('section_id', $category_id)->first();
+        }
+        $products = Product::where('category_id',$category->id)->where('product_price', '<=', $request->l_price)->get();
         return view('FrontEnd.product.catePro',compact('products', 'category'));
     }
     public function contentPro($content_id)

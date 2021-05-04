@@ -243,12 +243,12 @@ li#show__all__Categories:hover div.megaMenuMainCategoryContainer {
 .other__Category__subCat__list__div {
     display: none;
 }
-.megaMenuMainCategoryContainer
+/* .megaMenuMainCategoryContainer
     > ul
     > li:nth-child(1):hover
     div.computer__subCat__list__div {
     display: block;
-}
+} */
 .megaMenuMainCategoryContainer
     > ul
     > li:nth-child(2):hover

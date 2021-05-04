@@ -27,13 +27,21 @@ use App\Http\Controllers\FrontEndController;
 */
 
 
-Route::get('/', [FrontEndController::class, 'home'])->name('front-home');
+Route::get('/home', [FrontEndController::class, 'home'])->name('front-home');
+Route::get('/', function(){
+  return redirect('/home');
+});
+Route::get('/logout', [FrontEndController::class, function(){
+    Auth::logout();
+    return redirect('/login');
+}])->name('logout');
 // Route::get('/', [ComingSoonController::class, 'index'])->name('coming-soon');
 Route::get('/all-products', [AllCategoryController::class, 'index'])->name('all_products');
 Route::get('category-all', [FrontEndController::class, 'CateAll'])->name('all_categories');
 Route::get('/search-item', [FrontEndController::class, 'search'])->name('search_item');
 Route::get('/product-view-{product:slug}', [FrontEndController::class, 'proView'])->name('view');
-Route::get('/category-wise-000789{category_id}65-product', [FrontEndController::class, 'catePro'])->name('cate_product');
+Route::get('/category-wise-product/{category_id}', [FrontEndController::class, 'catePro'])->name('cate_product');
+Route::post('/category-wise-product/sorted/', [FrontEndController::class, 'rangeSelect'])->name('rangeSelect');
 Route::get('/content-wise-000987{content_id}66-product', [FrontEndController::class, 'contentPro'])->name('content_product');
 Route::get('/banner-0001098{banner_id}67-product', [FrontEndController::class, 'bannerPro'])->name('banner_pro');
 Route::get('/contact-us', [FrontEndController::class, 'contact'])->name('contact_us');
@@ -44,7 +52,11 @@ Route::post('site-info-store', [SiteInfoController::class, 'cus_sms_store'])->na
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dashboard', function () {
+      if (Auth::user()->role == "admin") {
         return view('BackEnd.Home.admin_home');
+      }else {
+        return redirect('/home');
+      }
     })->name('admin_dashboard');
 
     Route::prefix('section')->group(function () {

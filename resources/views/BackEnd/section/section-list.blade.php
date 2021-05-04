@@ -32,6 +32,7 @@
                         <tr>
                             <th>Sl</th>
                             <th>Name</th>
+                            <th>Image</th>
                             <th>Status</th>
                             <th class="no-content">Actions</th>
                         </tr>
@@ -43,6 +44,9 @@
 
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $section->name }}</td>
+                                    <td>
+                                        <img src="{{ asset("Back/images/section/". $section->image) }}" height="100px" alt="image">
+                                    </td>
                                     <td>
                                         @if($section->status == '1')
                                             <ul class="form-inline">
@@ -93,13 +97,18 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="{{ route('section.update',$section) }}" method="post">
+                                                    <form action="{{ route('section.update',$section) }}" method="post" enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group">
                                                             <label for="name">Name</label>
                                                             <input type="hidden" name="id" value="{{ $section->id }}">
                                                             <input type="text" class="form-control" id="name" name="name" value="{{ $section->name }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="name">Preview Image</label>
+                                                            <img src="{{ asset("Back/images/section/". $section->image) }}">
+                                                            <input type="file" class="form-control-file" name="image" value="{{ $section->image }}" accept="image/*">
                                                         </div>
                                                         <button type="submit" class="btn btn-sm btn-primary float-right">Update</button>
                                                     </form>
@@ -118,6 +127,7 @@
                         <tr>
                             <th>Sl</th>
                             <th>Name</th>
+                            <th>Image</th>
                             <th>Status</th>
                             <th></th>
                         </tr>

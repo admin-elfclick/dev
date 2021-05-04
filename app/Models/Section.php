@@ -18,10 +18,15 @@ class Section extends Model
 
     public static function sections()
     {
-        $getSections = Section::where('status',1)->limit(3)->with('categories')->get();
+        $getSections = Section::where('status',1)->limit(9)->with('categories')->get();
         $getSections = json_decode(json_encode($getSections), true);
-
         return $getSections;
+    }
+    public static function sectionsTwo()
+    {
+        $getSectionstwo = Section::where('status',1)->oldest()->limit(10)->with('categories')->get();
+        $getSectionstwo = json_decode(json_encode($getSectionstwo), true);
+        return $getSectionstwo;
     }
 
     public function categories()

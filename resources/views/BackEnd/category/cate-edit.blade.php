@@ -44,7 +44,7 @@
         <!-- /.card-header -->
         <div class="card-body">
             <div class="offset-2 col-lg-8 col-md-8 col-sm-8">
-                <form action="{{ route('category-update',$cate->id) }}" method="post">
+                <form action="{{ route('category-update',$cate->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -67,7 +67,7 @@
                         <label for="name">Previous Image</label>
                         <img src="{{ asset("Back/images/category/". $cate->category_img ) }}" height="60" width="60" alt="pro-img"><br/>
                         <label for="name">Category Image</label>
-                        <input type="file" accept="image/*" class="form-control " name="category_img">
+                        <input type="file" accept="image/*" class="form-control-file" name="category_img">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>

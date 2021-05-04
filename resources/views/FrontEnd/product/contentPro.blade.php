@@ -46,7 +46,7 @@
                                     <div class="recommended__items__details">
                                         <p>{{ $contentPro->product_name }}</p>
                                         <span>${{ $contentPro->product_price }}</span><span class="discountPrice">${{ $contentPro->product_price_old }}</span>
-                                        {{--<p class="youSaveP">You save ${{ $contentPro->product_price_old - $contentPro->product_price }}</p>--}}
+                                        {{-- <p class="youSaveP">You save ${{ $contentPro->product_price_old - $contentPro->product_price }}</p> --}}
                                     </div>
                                 </a>
                             </div>

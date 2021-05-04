@@ -7,7 +7,7 @@
     @section('content')
     <section class="nav__container row mt-5">
         <div class="animate__animated animate__fadeInLeft slider__container col-md-8 col-sm-8 col-xs-12">
-            <div class="wrapper">
+            <div class="slider__wrapper">
                 <ul id="sb-slider" class="sb-slider">
                     @forelse($sliders as $slide)
                     <li>
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div class="animate__animated animate__fadeInRight sliderLeft__container col-md-4 col-sm-4 col-xs-12"">
+        <div class="animate__animated animate__fadeInRight sliderLeft__container col-md-4 col-sm-4 col-xs-12">
             <div class="sliderLeft__content row">
                 @forelse($banners as $ban)
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -60,7 +60,7 @@
         </div>
         <div class="recommended__container">
             @php
-            $products = \App\Models\Product::where([['status',1],'content_id' => $con->id])->latest()->limit(3)->get();
+            $products = \App\Models\Product::where([['status',1],'content_id' => $con->id])->latest()->limit(9)->get();
             @endphp
             <div class="row">
                 @forelse($products as $pro)
@@ -92,6 +92,53 @@
     @empty
 
     @endforelse
+
+    @php
+      $auth = Auth::user();
+    @endphp
+    @if (!empty($auth))
+      @php
+         $activites = DB::table('activities')->where('user_id', Auth::id())->limit(6)->orderBy('id', 'desc')->get();
+      @endphp
+    <section class="container animate__animated animate__fadeInUp">
+        <div class="recommended__title">
+            <h3>Last browsed products</h3>
+        </div>
+
+        <div class="recommended__container">
+            <div class="row">
+              @forelse ($activites as $products)
+                @php
+                  $productDetails = DB::table('products')->where('id', $products->product_id)->first();
+                @endphp
+                <div class="recommended__Items col-md-4 col-sm-6 col-12">
+                    <a href="{{ route('view',$productDetails->slug) }}" class="recommended__content">
+                        <div class="recommendedImg">
+                            <img src="{{ asset("Back/images/product/".$productDetails->product_img) }}" alt="">
+                            {{-- {{ asset("Back/images/product/".$pro->product_img) }} --}}
+                        </div>
+                        <div class="recommended__items__details">
+                            <p>{{ $productDetails->product_name }}</p>
+                            <span>${{ $productDetails->product_price }}</span><span class="discountPrice">${{ $productDetails->product_price_old }}</span>
+
+                            {{--<p class="youSaveP">You save $ </p>--}}
+                        </div>
+                    </a>
+                </div>
+              @empty
+              <div class="recommended__Items col-md-4 col-sm-6 col-12">
+                  <div class="recommended__content">
+                      <div class="recommended__items__details">
+                          <p>Oops... No products in history</p>
+                      </div>
+                  </div>
+              </div>
+              @endforelse
+            </div>
+        </div>
+    </section>
+  @endif
+
 
     @php
     $contentt = \App\Models\Content::where('status',1)->skip(1)->take(1)->get();
@@ -204,32 +251,6 @@
     @endforelse
 
 
-
-    {{--<section class="container animate__animated animate__fadeIn">
-
-        <div class="recommended__title">
-            <h3>Popular Categories</h3>
-        </div>
-        <div class="">
-
-            <div class="PopularCategoriesWrapper">
-
-                <div class="wrappedPopularCategory wrappedPopularCategory1">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="" alt="cate-img">
-                        <h3>lol</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory1">
-                        <h3>lol</h3>
-                        <ul>
-                            <li><a href="#">lol2</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>--}}
-
     {{--============ banner ======--}}
 
     @php
@@ -306,7 +327,8 @@
         </div>
         <div class="">
             <div class="PopularCategoriesWrapper">
-                <div class="wrappedPopularCategory wrappedPopularCategory1">
+
+                {{--<div class="wrappedPopularCategory wrappedPopularCategory1">
                     <div class="PopularCategoriesBackImgDiv">
                         <img src="https://firebasestorage.googleapis.com/v0/b/elfclicks-6f3b2.appspot.com/o/comp.jfif?alt=media&token=c4496fb8-47e7-4781-8c46-539a3a4b52e1" alt="">
                         <h3>Computer And Accessories</h3>
@@ -319,22 +341,35 @@
                             <li><a href="#">Computing Accessories</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="wrappedPopularCategory wrappedPopularCategory2">
+                </div>--}}
+
+                @php
+                    $sectionTwo = \App\Models\Section::sectionsTwo();
+                     /*echo "<pre>"; print_r($sectionTwo); die();*/
+                @endphp
+
+                {{-- @if (empty($sectionTwo)) --}}
+                @foreach($sectionTwo as $key => $sec)
+                <div class="wrappedPopularCategory wrappedPopularCategory{{ ++$key }}">
                     <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/phone.png" alt="">
-                        <h3>Phones And Tablets</h3>
+
+                        <img src="{{ asset("Back/images/section/".$sec['image']) }}" alt="category-img">
+
+                        <h3>{{ $sec['name'] }}</h3>
                     </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory2">
-                        <h3>Phones And Tablets</h3>
+                    <div class="PopularCategoriesFrontDiv PopularCategory{{ $key++ }}">
+                        <h3>{{ $sec['name'] }}</h3>
                         <ul>
-                            <li><a href="#">Mobile Phones</a></li>
-                            <li><a href="#">Mobile Accessories</a></li>
-                            <li><a href="#">Tablets</a></li>
+                            @foreach($sec['categories'] as $cate)
+                            <li><a href="{{ route('cate_product',$cate['id']) }}">{{ $cate['name'] }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
-                <div class="wrappedPopularCategory wrappedPopularCategory3">
+                @endforeach
+                {{-- @endif --}}
+
+                {{--<div class="wrappedPopularCategory wrappedPopularCategory3">
                     <div class="PopularCategoriesBackImgDiv">
                         <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/electronics.png" alt="">
                         <h3>Electronics</h3>
@@ -348,6 +383,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="wrappedPopularCategory wrappedPopularCategory4">
                     <div class="PopularCategoriesBackImgDiv">
                         <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/fashion.png" alt="">
@@ -362,6 +398,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="wrappedPopularCategory wrappedPopularCategory5">
                     <div class="PopularCategoriesBackImgDiv">
                         <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/home.png" alt="">
@@ -375,79 +412,9 @@
                             <li><a href="#">Home Furnishings</a></li>
                         </ul>
                     </div>
-                </div>
-                <div class="wrappedPopularCategory wrappedPopularCategory6">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/elfclicks-6f3b2.appspot.com/o/toy.jfif?alt=media&token=714ad07d-0bdb-45b9-be9a-b09550efa314" alt="">
-                        <h3>Baby, Kids and Toys</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory6">
-                        <h3>Baby, Kids and Toys</h3>
-                        <ul>
-                            <li><a href="#">Fashion for Girls</a></li>
-                            <li><a href="#">Fashion for Boys</a></li>
-                            <li><a href="#">Baby Essentials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="wrappedPopularCategory wrappedPopularCategory7">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140409/v3_homepage/categories/subs/other.png" alt="">
-                        <h3>Other Categories</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory7">
-                        <h3>Other Categories</h3>
-                        <ul>
-                            <li><a href="#">Beauty,Health & Personal Care</a></li>
-                            <li><a href="#">Sports & Fitness</a></li>
-                            <li><a href="#">Books & Media Library</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="wrappedPopularCategory wrappedPopularCategory8">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/sports.png" alt="">
-                        <h3>Sports and Fitness</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory8">
-                        <h3>Sports and Fitness</h3>
-                        <ul>
-                            <li><a href="#">Fitness</a></li>
-                            <li><a href="#">Outdoor & Indoor Games</a></li>
-                            <li><a href="#">Sportswear</a></li>
-                        </ul>
-                    </div>
-                </div>
+                </div>--}}
 
-                <div class="wrappedPopularCategory wrappedPopularCategory2">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/phone.png" alt="">
-                        <h3>Phones And Tablets</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory2">
-                        <h3>Phones And Tablets</h3>
-                        <ul>
-                            <li><a href="#">Mobile Phones</a></li>
-                            <li><a href="#">Mobile Accessories</a></li>
-                            <li><a href="#">Tablets</a></li>
-                        </ul>
-                    </div>
-                </div>
 
-                <div class="wrappedPopularCategory wrappedPopularCategory3">
-                    <div class="PopularCategoriesBackImgDiv">
-                        <img src="https://www-konga-com-res.cloudinary.com/image/upload/w_auto,f_auto,fl_lossy,dpr_auto,q_auto/v1611140408/v3_homepage/categories/subs/electronics.png" alt="">
-                        <h3>Electronics</h3>
-                    </div>
-                    <div class="PopularCategoriesFrontDiv PopularCategory3">
-                        <h3>Electronics</h3>
-                        <ul>
-                            <li><a href="#">Televisions</a></li>
-                            <li><a href="#">DVD Players and recorders</a></li>
-                            <li><a href="#">Cameras</a></li>
-                        </ul>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -622,101 +589,4 @@
             </div>
         </div>
     </div>
-
-    <footer class="Footer">
-        <div class="container">
-            <div class="row">
-                <div class="footerContent col-md-2 col-12">
-                    <h5>ABOUT ELF-CLICK</h5>
-                    <ul>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">About Us</a></li>
-                        {{-- <li><a href="#">Careers</a></li>
-                        <li><a href="#">Out Blog</a></li>
-                        <li><a href="#">Forum</a></li>--}}
-                        <li><a href="#">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <div class="footerContent col-md-1 col-12">
-                    <h5>PAYMENT</h5>
-                    <ul>
-                        <li><a href="#">elfclickPay</a></li>
-                        <li><a href="#">Wallet</a></li>
-                        <li><a href="#">Verve</a></li>
-                        <li><a href="#">Mastercard</a></li>
-                        <li><a href="#">Visa</a></li>
-                    </ul>
-                </div>
-                <div class="footerContent col-md-2 col-12">
-                    <h5>BUYING ON ELF-CLICK</h5>
-                    <ul>
-                        <li><a href="#">Buyer Safety Centre</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Delivery</a></li>
-                        <li><a href="#">elf-click Return Policy</a></li>
-                        <li><a href="#">Digital Services</a></li>
-                        <li><a href="#">Bulk Purchase</a></li>
-                    </ul>
-                </div>
-                <div class="footerContent col-md-1 col-12">
-                    <h5>MORE INFO</h5>
-                    <ul>
-                        <li><a href="#">Site Map</a></li>
-                        <li><a href="#">Track My Order</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Authentic Items Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footerContent col-md-2 col-12">
-                    <h5>MAKE MONEY ON ELF-CLICK</h5>
-                    <ul>
-                        <li><a href="#">Become a elf-click Affiliate</a></li>
-                    </ul>
-                </div>
-                <div class="footerContent col-md-4 col-12">
-                    <h5>DOWNLOAD & CONNECT WITH US</h5>
-                    <div class="appImg">
-                        @isset($siteInfo->app_store_link)
-
-                        <a href="{{ $siteInfo->app_store_link }}">
-
-                            <img src="https://www.freepnglogos.com/uploads/app-store-logo-png/apple-app-store-how-setup-for-ios-development-11.png" alt="">
-                        </a>
-                        @endisset
-
-                        @isset($siteInfo->play_store_link)
-
-                        <a href="{{ $siteInfo->play_store_link }}">
-                            <img src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/103-GooglePlay_play_google_play_apps-512.png" alt="">
-                        </a>
-                        @endisset
-
-                    </div>
-                    <h5>CONNECT WITH US</h5>
-                    <div class="socialIcons">
-                        @isset($siteInfo->facebook_link)
-                        <a href="{{ $siteInfo->facebook_link }}" style="color: lightgrey;">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        @endisset
-                        @isset($siteInfo->twitter_link)
-                        <a href="{{ $siteInfo->twitter_link }}" style="color: lightgrey;">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        @endisset
-                        @isset($siteInfo->instagram_link)
-                        <a href="{{ $siteInfo->instagram_link }}" style="color: lightgrey;">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        @endisset
-                        @isset($siteInfo->youtube_link)
-                        <a href="{{ $siteInfo->youtube_link }}" style="color: lightgrey;">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        @endisset
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
     @endsection

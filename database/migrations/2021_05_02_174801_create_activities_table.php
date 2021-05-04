@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSectionsTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('image')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->string('user_id');
+            $table->string('product_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('activities');
     }
 }

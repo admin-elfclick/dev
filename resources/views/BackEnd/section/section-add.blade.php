@@ -31,10 +31,13 @@
             </div>
             {{--<div class="widget-content widget-content-area">--}}
                 <div class="offset-1 col-xl-10 col-md-10 col-sm-10 col-10">
-                    <form action="{{ route('section.store') }}" method="post">
+                    <form action="{{ route('section.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-3">
                             <input type="text" class="form-control" name="name"  placeholder="Category name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="file" class="form-control-file" name="image" accept="image/*">
                         </div>
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     </form>
