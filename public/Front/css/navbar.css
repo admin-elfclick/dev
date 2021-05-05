@@ -370,3 +370,9 @@ li.computer__nav__list:hover div.computer__subCat__nav__list__div {
 .otherCategoriesAbsolutePosition {
     left: -94rem;
 }
+li.computer__nav__list.active:after{
+    content: "" !important;
+}
+li.computer__nav__list.active>a{
+    color: #000 !important;
+}

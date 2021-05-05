@@ -304,9 +304,9 @@
 
 
     <script type="text/javascript" src="{{ asset('/Front') }}/js/modernizr.custom.46884.js"></script>
+    <script type="text/javascript" src="{{ asset('/Front') }}/js/jquery.elevateZoom-3.0.8.min.js"></script>
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -327,7 +327,6 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ asset('/Front') }}/js/jquery.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -426,7 +425,8 @@
     <script>
         $(window).on('load', function(){
             $('.preloader').fadeOut(1000);
-        })
+        });
+        $('#zoom_01').elevateZoom();
     </script>
 </body>
 

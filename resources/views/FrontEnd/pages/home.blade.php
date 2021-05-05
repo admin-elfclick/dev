@@ -73,7 +73,7 @@
                             <p>{{ $pro->product_name }}</p>
                             <span>${{ $pro->product_price }}</span><span class="discountPrice">${{ $pro->product_price_old }}</span>
 
-                            {{--<p class="youSaveP">You save $ </p>--}}
+                            <p class="youSaveP">You save ${{$pro->product_price_old - $pro->product_price}} </p>
                         </div>
                     </a>
                 </div>
